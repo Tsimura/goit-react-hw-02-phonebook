@@ -16,19 +16,30 @@ class App extends Component {
   };
 
   addContact = ({ name, number }) => {
-    console.log({ name, number });
-
+    const { contacts } = this.state;
     const contact = {
       id: shortid.generate(),
       name,
       number,
     };
 
-    this.setState(({ contacts }) => ({
-      contacts: [...contacts, contact],
-    }));
+    if (
+      contacts.find(
+        contact => contact.name.toLowerCase() === name.toLowerCase(),
+      )
+    ) {
+      alert(`${name} is already in contacts.`);
+    } else {
+      this.setState(({ contacts }) => ({
+        contacts: [...contacts, contact],
+      }));
+    }
+  };
 
-    console.log(this.state);
+  deleteContact = contactId => {
+    this.setState(({ contacts }) => ({
+      contacts: contacts.filter(contact => contact.id !== contactId),
+    }));
   };
 
   getVisibleContacts = () => {
@@ -44,7 +55,7 @@ class App extends Component {
   };
 
   render() {
-    const { filter } = this.state;
+    const { contacts, filter } = this.state;
     const visibleContacts = this.getVisibleContacts();
 
     return (
@@ -53,7 +64,14 @@ class App extends Component {
         <ContactForm onSubmit={this.addContact} />
         <h2>Contacts</h2>
         <Filter value={filter} onChangeFilter={this.changeFilter} />
-        <ContactList contacts={visibleContacts} />
+        {contacts.length > 0 ? (
+          <ContactList
+            contacts={visibleContacts}
+            onDeleteContact={this.deleteContact}
+          />
+        ) : (
+          <h3>Your Phonebook is empty!</h3>
+        )}
       </div>
     );
   }
