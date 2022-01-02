@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import shortid from 'shortid';
 import ContactForm from './ContactForm/ContactForm';
-import { ContactList } from 'components/ContactList/ContactList';
+import ContactList from 'components/ContactList/ContactList';
+import Filter from 'components/Filter/Filter';
 
 class App extends Component {
   state = {
@@ -12,12 +13,6 @@ class App extends Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
-  };
-
-  makeListContacts = () => {
-    const { contacts } = this.state;
-    console.log({ contacts });
-    return contacts;
   };
 
   addContact = ({ name, number }) => {
@@ -36,16 +31,31 @@ class App extends Component {
     console.log(this.state);
   };
 
+  getVisibleContacts = () => {
+    const { contacts, filter } = this.state;
+    const normalizedFilter = filter.toLowerCase();
+    return contacts.filter(contacts =>
+      contacts.name.toLowerCase().includes(normalizedFilter),
+    );
+  };
+
+  changeFilter = event => {
+    this.setState({ filter: event.currentTarget.value });
+  };
+
   render() {
+    const { filter } = this.state;
+    const visibleContacts = this.getVisibleContacts();
+
     return (
-      <>
+      <div>
         <h1> Phonebook</h1>
         <ContactForm onSubmit={this.addContact} />
         <h2>Contacts</h2>
-        <ContactList contacts={this.makeListContacts()} />
-      </>
+        <Filter value={filter} onChangeFilter={this.changeFilter} />
+        <ContactList contacts={visibleContacts} />
+      </div>
     );
   }
 }
-
 export default App;

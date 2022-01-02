@@ -1,5 +1,5 @@
 import React from 'react';
-export const ContactList = ({ contacts }) => {
+const ContactList = ({ contacts }) => {
   return (
     <ul>
       {contacts.map(({ id, name, number }) => (
@@ -10,3 +10,5 @@ export const ContactList = ({ contacts }) => {
     </ul>
   );
 };
+
+export default ContactList;
