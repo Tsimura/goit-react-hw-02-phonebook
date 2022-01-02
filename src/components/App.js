@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import shortid from 'shortid';
 import ContactForm from './ContactForm/ContactForm';
+import { ContactList } from 'components/ContactList/ContactList';
 
 class App extends Component {
   state = {
@@ -11,14 +13,36 @@ class App extends Component {
     ],
     filter: '',
   };
-  formSubmitHandler = data => {
-    console.log(data);
+
+  makeListContacts = () => {
+    const { contacts } = this.state;
+    console.log({ contacts });
+    return contacts;
   };
+
+  addContact = ({ name, number }) => {
+    console.log({ name, number });
+
+    const contact = {
+      id: shortid.generate(),
+      name,
+      number,
+    };
+
+    this.setState(({ contacts }) => ({
+      contacts: [...contacts, contact],
+    }));
+
+    console.log(this.state);
+  };
+
   render() {
     return (
       <>
         <h1> Phonebook</h1>
-        <ContactForm onSubmit={this.formSubmitHandler} />
+        <ContactForm onSubmit={this.addContact} />
+        <h2>Contacts</h2>
+        <ContactList contacts={this.makeListContacts()} />
       </>
     );
   }

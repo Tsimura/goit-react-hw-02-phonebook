@@ -10,9 +10,9 @@ class ContactForm extends Component {
     const { name, value } = event.currentTarget;
     this.setState({ [name]: value });
   };
+
   handleSubmit = event => {
     event.preventDefault();
-    // console.log(this.state);
     this.props.onSubmit(this.state);
     this.resetForm();
   };
@@ -20,10 +20,12 @@ class ContactForm extends Component {
   resetForm = () => {
     this.setState({ name: '', number: '' });
   };
+
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
         <label htmlFor={this.nameInputId}>
+          Name <br />
           <input
             type="text"
             name="name"
@@ -35,8 +37,9 @@ class ContactForm extends Component {
             onChange={this.handleChange}
           />
         </label>
+        <br />
         <label htmlFor={this.numberInputId}>
-          Number
+          Number <br />
           <input
             type="tel"
             name="number"
@@ -48,9 +51,12 @@ class ContactForm extends Component {
             onChange={this.handleChange}
           />
         </label>
+        <br />
         <button type="submit">Add contact</button>
       </form>
     );
   }
 }
 export default ContactForm;
+
+// Повернути валідацію та <br />!!!!
