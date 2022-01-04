@@ -5,7 +5,7 @@ const ContactListItem = ({ id, name, number, onDeleteContact }) => {
     <>
       {name}: {number}
       <button type="button" onClick={() => onDeleteContact(id)}>
-        <ImUserMinus size={20} color="rgba(0, 0, 0, 0.6)"></ImUserMinus>
+        <ImUserMinus size={18}></ImUserMinus>
       </button>
     </>
   );

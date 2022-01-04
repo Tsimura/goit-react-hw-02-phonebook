@@ -3,7 +3,7 @@ import shortid from 'shortid';
 import ContactForm from './ContactForm/ContactForm';
 import ContactList from 'components/ContactList/ContactList';
 import Filter from 'components/Filter/Filter';
-import { AppWrapper } from './App.styled';
+import { AppWrapper, WorkingSpace } from './App.styled';
 class App extends Component {
   state = {
     contacts: [
@@ -53,18 +53,20 @@ class App extends Component {
     const visibleContacts = this.getVisibleContacts();
     return (
       <AppWrapper>
-        <h1>Phonebook</h1>
-        <ContactForm onSubmit={this.addContact} />
-        <h2>Contacts</h2>
-        <Filter value={filter} onChangeFilter={this.changeFilter} />
-        {contacts.length > 0 ? (
-          <ContactList
-            contacts={visibleContacts}
-            onDeleteContact={this.deleteContact}
-          />
-        ) : (
-          <h3>Your Phonebook is empty!</h3>
-        )}
+        <WorkingSpace>
+          <h1>Phonebook</h1>
+          <ContactForm onSubmit={this.addContact} />
+          <h2>Contacts</h2>
+          <Filter value={filter} onChangeFilter={this.changeFilter} />
+          {contacts.length > 0 ? (
+            <ContactList
+              contacts={visibleContacts}
+              onDeleteContact={this.deleteContact}
+            />
+          ) : (
+            <h3>Your Phonebook is empty!</h3>
+          )}
+        </WorkingSpace>
       </AppWrapper>
     );
   }
