@@ -1,11 +1,15 @@
-import React from 'react';
+import PropTypes from 'prop-types';
+import { FilterWrapper } from './Filter.styled.jsx';
 const Filter = ({ value, onChangeFilter }) => {
   return (
-    <div>
+    <FilterWrapper>
       Find contacts by name
-      <br />
       <input type="text" value={value} onChange={onChangeFilter} />
-    </div>
+    </FilterWrapper>
   );
+};
+Filter.protoType = {
+  value: PropTypes.string,
+  onChangeFilter: PropTypes.func.isRequired,
 };
 export default Filter;

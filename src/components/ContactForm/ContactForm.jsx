@@ -1,31 +1,28 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import shortid from 'shortid';
-
+import { Form } from './ContactForm.styled';
 class ContactForm extends Component {
   state = { name: '', number: '' };
   nameInputId = shortid.generate();
   numberInputId = shortid.generate();
-
   handleChange = event => {
     const { name, value } = event.currentTarget;
     this.setState({ [name]: value });
   };
-
   handleSubmit = event => {
     event.preventDefault();
     this.props.onSubmit(this.state);
     this.resetForm();
   };
-
   resetForm = () => {
     this.setState({ name: '', number: '' });
   };
-
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <Form onSubmit={this.handleSubmit}>
         <label htmlFor={this.nameInputId}>
-          Name <br />
+          Name
           <input
             type="text"
             name="name"
@@ -37,9 +34,8 @@ class ContactForm extends Component {
             onChange={this.handleChange}
           />
         </label>
-        <br />
         <label htmlFor={this.numberInputId}>
-          Number <br />
+          Number
           <input
             type="tel"
             name="number"
@@ -51,12 +47,10 @@ class ContactForm extends Component {
             onChange={this.handleChange}
           />
         </label>
-        <br />
         <button type="submit">Add contact</button>
-      </form>
+      </Form>
     );
   }
 }
+ContactForm.protoTypes = { onSubmit: PropTypes.func.isRequired };
 export default ContactForm;
-
-// Повернути валідацію та <br />!!!!

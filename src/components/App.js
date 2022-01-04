@@ -3,7 +3,7 @@ import shortid from 'shortid';
 import ContactForm from './ContactForm/ContactForm';
 import ContactList from 'components/ContactList/ContactList';
 import Filter from 'components/Filter/Filter';
-
+import { AppWrapper } from './App.styled';
 class App extends Component {
   state = {
     contacts: [
@@ -14,7 +14,6 @@ class App extends Component {
     ],
     filter: '',
   };
-
   addContact = ({ name, number }) => {
     const { contacts } = this.state;
     const contact = {
@@ -22,7 +21,6 @@ class App extends Component {
       name,
       number,
     };
-
     if (
       contacts.find(
         contact => contact.name.toLowerCase() === name.toLowerCase(),
@@ -35,13 +33,11 @@ class App extends Component {
       }));
     }
   };
-
   deleteContact = contactId => {
     this.setState(({ contacts }) => ({
       contacts: contacts.filter(contact => contact.id !== contactId),
     }));
   };
-
   getVisibleContacts = () => {
     const { contacts, filter } = this.state;
     const normalizedFilter = filter.toLowerCase();
@@ -49,18 +45,15 @@ class App extends Component {
       contacts.name.toLowerCase().includes(normalizedFilter),
     );
   };
-
   changeFilter = event => {
     this.setState({ filter: event.currentTarget.value });
   };
-
   render() {
     const { contacts, filter } = this.state;
     const visibleContacts = this.getVisibleContacts();
-
     return (
-      <div>
-        <h1> Phonebook</h1>
+      <AppWrapper>
+        <h1>Phonebook</h1>
         <ContactForm onSubmit={this.addContact} />
         <h2>Contacts</h2>
         <Filter value={filter} onChangeFilter={this.changeFilter} />
@@ -72,7 +65,7 @@ class App extends Component {
         ) : (
           <h3>Your Phonebook is empty!</h3>
         )}
-      </div>
+      </AppWrapper>
     );
   }
 }
